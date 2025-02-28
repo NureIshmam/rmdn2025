@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramadan Timings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Scheherazade+New:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary-color: #ffffff; /* White */
+            --secondary-color: #D4AF37; /* Golden */
+            --background-dark: #2b1d0e; /* Rich Dark Golden */
+            --text-light: #ffffff; /* White */
+        }
+
+        body {
+            font-family: 'Scheherazade New', serif;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            text-align: center;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--secondary-color);
+        }
+
+        h1 {
+            color: var(--text-light);
+            font-family: 'Amiri', serif;
+            text-shadow: 2px 2px 8px rgba(212, 175, 55, 0.8);
+            font-size: 2.5em;
+        }
+
+        .timing-card {
+            background: var(--background-dark);
+            color: var(--text-light);
+            padding: 0px;
+            margin: 5px 0;
+            border-radius: 8px;
+            border: 2px solid var(--secondary-color);
+            font-size: 1.8em;
+        }
+
+        .countdown {
+            font-size: 1.8em;
+            margin-top: 20px;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        footer {
+            margin-top: 30px;
+            padding: 15px;
+            background: transparent;
+            color: honeydew;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="padding: 0px;">Ramadan Timings</h1>
+        <h2>1st Ramadan: March 11, 2025</h2>
+        <div class="timing-card">
+            <h2>Sehri Time</h2>
+            <h3 id="sehri-time">04:52 AM</h3>
+        </div>
+        <div class="timing-card">
+            <h2>Iftar Time</h2>
+            <h3 id="iftar-time">06:08 PM</h3>
+        </div>
+        <div class="countdown">
+            <h3>Next Event In:</h3>
+            <p id="countdown-timer">00:00:00</p>
+        </div>
+    </div>
+
+    <footer>
+        © 2025 THE SLEEPY ONES. All rights reserved.
+    </footer>
+
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const now = new Date();
+            const sehriTime = new Date();
+            const iftarTime = new Date();
+            
+            sehriTime.setHours(4, 52, 0, 0); // Sehri time for Dhaka on 1st Ramadan
+            iftarTime.setHours(18, 8, 0, 0); // Iftar time for Dhaka on 1st Ramadan
+            
+            let nextEvent, timeDiff;
+            if (now < sehriTime) {
+                nextEvent = 'Sehri';
+                timeDiff = sehriTime - now;
+            } else if (now < iftarTime) {
+                nextEvent = 'Iftar';
+                timeDiff = iftarTime - now;
+            } else {
+                nextEvent = 'Sehri (Next Day)';
+                sehriTime.setDate(sehriTime.getDate() + 1);
+                timeDiff = sehriTime - now;
+            }
+            
+            const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown-timer').textContent = `${hours}h ${minutes}m ${seconds}s until ${nextEvent}`;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
